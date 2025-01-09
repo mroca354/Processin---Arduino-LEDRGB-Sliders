@@ -1,0 +1,45 @@
+/********** Arduino **********
+ * Laboratorio 07: LED RGB desde el Arduino, vía PWM con una interfaz gráfica
+ * Autor: Cristian Augusto Restrepo
+ * Descripcion:
+ *   Controlar un LED RGB desde el Arduino, vía PWM con una interfaz gráfica
+ *   en Processing/ControlP5 para controlar el valor de cada color.
+ */
+//Indicamos los pines analógicos del led RGB que deben ser PWM (~) Para un correcto funcionamiento
+int Red = 3;
+int Gre = 5;
+int Blu = 6;
+//Definimos la variable que guardará el valor del slide
+int valor = 0;
+ 
+void setup() {
+  //indicamos al Arduino los pines de salida
+  pinMode(Red, OUTPUT);
+  pinMode(Gre, OUTPUT);
+  pinMode(Blu, OUTPUT);
+  //Enviamos la comunicación del serial a 9600bps
+  //Hacia el Prosessing
+  Serial.begin(9600);
+}
+ 
+ 
+void loop() {
+  //Si la conexión con el puerto es correcta
+  if (Serial.available()>0) {
+    //Recibimos la letra del color que se está utilizando
+    char Color = Serial.read();
+    //Y posteriormente se envía el valor al Arduino
+    if (Color == 'R'){
+      valor = Serial.parseInt();
+      analogWrite(Red,255-valor);
+    }
+    if (Color == 'G'){
+      valor = Serial.parseInt();
+      analogWrite(Gre,255-valor);
+    }
+    if (Color == 'B'){
+      valor = Serial.parseInt();
+      analogWrite(Blu,255-valor);
+    }  
+  }
+}
