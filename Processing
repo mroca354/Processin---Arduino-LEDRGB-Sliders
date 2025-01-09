@@ -1,0 +1,46 @@
+//extret de.....http://embebidoscar.blogspot.com/p/laboratorio-siete.html 
+// Importamos las librerías de ControlP5 y Serial
+//connexions per led escaner 3,5v i pin 3,5,6
+import controlP5.*;
+import processing.serial.*;
+ 
+// Creamos las variables para ControlP5, el Slider y el puerto Serial
+ControlP5 cp5;
+Slider slider0;
+Slider slider1;
+Slider slider2;
+Serial serial;
+ 
+// Solo se ejecuta una vez, al iniciar el Sketch
+void setup() {
+  // Tamaño de la Ventana
+  size(500, 300);
+  // Creamos el objeto de ControlP5
+  cp5 = new ControlP5(this);
+  // Creamos el objeto Slider  
+  slider0 = cp5.addSlider("R", 0, 255, 128, 40, 100, 300, 40);
+  slider1 = cp5.addSlider("G", 0, 255, 128, 40, 150, 300, 40);
+  slider2 = cp5.addSlider("B", 0, 255, 128, 40, 200, 300, 40);
+  textSize(30);
+  text("RGB",10,50);
+  // Creamos el objeto del puerto Serial
+ serial = new Serial(this, Serial.list()[0], 9600);
+}
+ 
+// Se ejecuta N frames por segundo
+void draw() {
+  // En este caso no debe dibujar nada
+}
+ 
+// Cuando ocurra un evento, aquí lo procesamos
+void controlEvent(ControlEvent evento) {
+  // Obtenemos el nombre y el valor del evento
+  String nombre = evento.getController().getName();
+  int valor = int(evento.getController().getValue());
+  // Envíamos el valor al Arduino a través del Serial
+  serial.write(nombre + valor);
+  println(nombre + valor);
+  delay(100);
+  // Imprimimos en la consola, para ver que todo va Ok
+  println(nombre + valor);
+}
