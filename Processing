@@ -5,7 +5,7 @@ import processing.serial.*;
 // Creamos las variables para ControlP5, el Slider y el puerto Serial
 ControlP5 cp5;
 Serial serial;
-Serial myPort;
+
 // Solo se ejecuta una vez, al iniciar el Sketch
 void setup() {
   // Tamaño de la Ventana
@@ -20,7 +20,7 @@ void setup() {
   text("RGB",10,50);
   // Creamos el objeto del puerto Serial
 String portName = Serial.list()[0]; //change the 0 to a 1 or 2 etc. to match your port  
-  myPort = new Serial(this,"/dev/ttyUSB0",57600);
+  serial = new Serial(this,"/dev/ttyACM0",9600);
 }
  
 // Se ejecuta N frames por segundo
